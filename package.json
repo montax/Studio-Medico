@@ -1,5 +1,6 @@
 {
     "name": "medcare-backend",
+    "type": "module",
     "version": "1.0.0",
     "description": "Sistema di prenotazione visite mediche",
     "main": "server.js",

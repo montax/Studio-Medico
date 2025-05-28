@@ -1,10 +1,10 @@
-const express = require('express');
-const mysql = require('mysql2/promise');
-const bcrypt = require('bcrypt');
-const session = require('express-session');
-const MySQLStore = require('express-mysql-session')(session);
-const path = require('path');
-require('dotenv').config();
+import express from 'express';
+import mysql from 'mysql2/promise';
+import bcrypt from 'bcrypt';
+import session from 'express-session';
+import MySQLStore from 'express-mysql-session';
+import path from 'path';
+import 'dotenv/config';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -21,7 +21,8 @@ const dbConfig = {
 const pool = mysql.createPool(dbConfig);
 
 // Configurazione session store
-const sessionStore = new MySQLStore({
+const MySQLStoreSession = MySQLStore(session);
+const sessionStore = new MySQLStoreSession({
   ...dbConfig,
   clearExpired: true,
   checkExpirationInterval: 900000,
@@ -48,7 +49,7 @@ app.use(session({
 }));
 
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', './views');
 
 // Authentication middleware
 const requireAuth = (req, res, next) => {
@@ -460,5 +461,3 @@ app.use((req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
-
-module.exports = app;
