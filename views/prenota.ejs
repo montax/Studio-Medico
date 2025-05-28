@@ -1,0 +1,102 @@
+<%- include('partials/header', {
+    title: 'Prenota Visita',
+    currentPage: 'prenota',
+    pageStyles: ['/css/prenota.css']
+}) %>
+
+<div class="reservation-container">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="reservation-card">
+                    <div class="reservation-header">
+                        <h3>
+                            <i class="fas fa-calendar-plus me-2"></i>
+                            Prenota Visita
+                        </h3>
+                    </div>
+                    <div class="reservation-body">
+                        <% if (error) { %>
+                            <div class="alert alert-danger">
+                                <i class="fas fa-exclamation-circle me-2"></i>
+                                <%= error %>
+                            </div>
+                        <% } %>
+                        <% if (success) { %>
+                            <div class="alert alert-success">
+                                <i class="fas fa-check-circle me-2"></i>
+                                <%= success %>
+                            </div>
+                        <% } %>
+
+                        <div class="doctor-details" data-specialty="<%= medico.specialita %>">
+                            <h4><i class="fas fa-user-md me-2"></i>Dettagli Medico</h4>
+                            <p>
+                                <strong><i class="fas fa-user me-2"></i>Nome:</strong>
+                                Dr. <%= medico.nome %> <%= medico.cognome %>
+                            </p>
+                            <p>
+                                <strong><i class="fas fa-stethoscope me-2"></i>Specialità:</strong>
+                                <%= medico.specialita %>
+                            </p>
+                            <p>
+                                <strong><i class="fas fa-euro-sign me-2"></i>Prezzo Visita:</strong>
+                                €<%= medico.prezzo %>
+                            </p>
+                        </div>
+
+                        <form action="/prenota/<%= medico.id %>" method="POST">
+                            <div class="mb-4">
+                                <label for="data" class="form-label">
+                                    <i class="fas fa-calendar me-2"></i>Data Visita
+                                </label>
+                                <input type="date" class="form-control" id="data" name="data" required 
+                                       min="<%= new Date().toISOString().split('T')[0] %>">
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="ora" class="form-label">
+                                    <i class="fas fa-clock me-2"></i>Orario Visita
+                                </label>
+                                <select class="form-select" id="ora" name="ora" required>
+                                    <option value="">Seleziona orario...</option>
+                                    <% 
+                                    const orari = [
+                                        '09:00', '09:30', '10:00', '10:30', '11:00', '11:30',
+                                        '14:00', '14:30', '15:00', '15:30', '16:00', '16:30'
+                                    ];
+                                    orari.forEach(ora => { %>
+                                        <option value="<%= ora %>"><%= ora %></option>
+                                    <% }); %>
+                                </select>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="note" class="form-label">
+                                    <i class="fas fa-sticky-note me-2"></i>Note (opzionale)
+                                </label>
+                                <textarea class="form-control" id="note" name="note" rows="3" 
+                                        placeholder="Inserisci eventuali note o sintomi..."></textarea>
+                            </div>
+
+                            <div class="d-grid gap-3">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-calendar-check me-2"></i>
+                                    Prenota Visita
+                                </button>
+                                <a href="/" class="btn btn-secondary">
+                                    <i class="fas fa-times me-2"></i>
+                                    Annulla
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/footer', {
+    pageScripts: ['/js/prenota.js']
+}) %> 

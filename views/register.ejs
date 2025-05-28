@@ -1,0 +1,155 @@
+<%- include('partials/header', {
+    title: 'Registrazione',
+    currentPage: 'register',
+    pageStyles: ['/css/register.css']
+}) %>
+
+<div class="register-container">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="register-card">
+                    <div class="register-header">
+                        <h3>
+                            <i class="fas fa-user-plus me-2"></i>
+                            Registrazione Nuovo Utente
+                        </h3>
+                    </div>
+                    <div class="register-body">
+                        <% if (error) { %>
+                            <div class="alert alert-danger">
+                                <i class="fas fa-exclamation-circle me-2"></i>
+                                <%= error %>
+                            </div>
+                        <% } %>
+                        <% if (success) { %>
+                            <div class="alert alert-success">
+                                <i class="fas fa-check-circle me-2"></i>
+                                <%= success %>
+                            </div>
+                        <% } %>
+
+                        <form action="/register" method="POST" class="needs-validation" novalidate>
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <label for="nome" class="form-label">
+                                        <i class="fas fa-user me-2"></i>Nome
+                                    </label>
+                                    <input type="text" class="form-control" id="nome" name="nome" required
+                                           pattern="[A-Za-zÀ-ÿ\s]{2,50}" minlength="2" maxlength="50">
+                                    <div class="invalid-feedback">
+                                        Inserisci un nome valido (2-50 caratteri, solo lettere)
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-4">
+                                    <label for="cognome" class="form-label">
+                                        <i class="fas fa-user me-2"></i>Cognome
+                                    </label>
+                                    <input type="text" class="form-control" id="cognome" name="cognome" required
+                                           pattern="[A-Za-zÀ-ÿ\s]{2,50}" minlength="2" maxlength="50">
+                                    <div class="invalid-feedback">
+                                        Inserisci un cognome valido (2-50 caratteri, solo lettere)
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <label for="data_nascita" class="form-label">
+                                        <i class="fas fa-birthday-cake me-2"></i>Data di Nascita
+                                    </label>
+                                    <input type="date" class="form-control" id="data_nascita" name="data_nascita" required
+                                           max="<%= new Date().toISOString().split('T')[0] %>">
+                                    <div class="invalid-feedback">
+                                        Inserisci una data di nascita valida
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-4">
+                                    <label for="codice_fiscale" class="form-label">
+                                        <i class="fas fa-id-card me-2"></i>Codice Fiscale
+                                    </label>
+                                    <input type="text" class="form-control" id="codice_fiscale" name="codice_fiscale" maxlength="16">
+                                    <div class="invalid-feedback">
+                                        Inserisci un codice fiscale valido (16 caratteri)
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="provincia" class="form-label">
+                                    <i class="fas fa-map-marker-alt me-2"></i>Provincia
+                                </label>
+                                <input type="text" class="form-control" id="provincia" name="provincia" required
+                                       pattern="[A-Za-zÀ-ÿ\s]{2,50}" minlength="2" maxlength="50">
+                                <div class="invalid-feedback">
+                                    Inserisci una provincia valida (2-50 caratteri)
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <label for="username" class="form-label">
+                                        <i class="fas fa-at me-2"></i>Username
+                                    </label>
+                                    <input type="text" class="form-control" id="username" name="username" required
+                                           pattern="[a-zA-Z0-9_]{3,30}" minlength="3" maxlength="30">
+                                    <div class="invalid-feedback">
+                                        Username non valido (3-30 caratteri, solo lettere, numeri e underscore)
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-4">
+                                    <label for="password" class="form-label">
+                                        <i class="fas fa-lock me-2"></i>Password
+                                    </label>
+                                    <div class="password-input-group">
+                                        <input type="password" class="form-control" id="password" name="password" required
+                                               minlength="8" maxlength="255">
+                                        <button type="button" class="btn btn-toggle-password" tabindex="-1">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        La password deve essere di almeno 8 caratteri
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="confirm_password" class="form-label">
+                                    <i class="fas fa-lock me-2"></i>Conferma Password
+                                </label>
+                                <div class="password-input-group">
+                                    <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                                    <button type="button" class="btn btn-toggle-password" tabindex="-1">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                                <div class="invalid-feedback">
+                                    Le password non coincidono
+                                </div>
+                            </div>
+
+                            <div class="d-grid gap-3">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-user-plus me-2"></i>
+                                    Registrati
+                                </button>
+                                <a href="/login" class="btn btn-secondary">
+                                    <i class="fas fa-sign-in-alt me-2"></i>
+                                    Hai già un account? Accedi
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/footer', {
+    pageScripts: ['/js/register.js']
+}) %> 

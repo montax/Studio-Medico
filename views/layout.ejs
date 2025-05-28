@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= typeof title !== 'undefined' ? title + ' - ' : '' %>MedCare</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Main Styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <!-- Page Specific Styles -->
+    <% if (typeof pageStyles !== 'undefined') { %>
+        <% pageStyles.forEach(style => { %>
+            <link rel="stylesheet" href="<%= style %>">
+        <% }) %>
+    <% } %>
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="bg-animation">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <% if (typeof paziente !== 'undefined' && paziente) { %>
+        <nav class="glass-nav">
+            <div class="nav-container">
+                <div class="nav-brand">
+                    <i class="fas fa-heartbeat"></i>
+                    <span>MedCare</span>
+                </div>
+                
+                <div class="nav-menu" id="navMenu">
+                    <a href="/" class="nav-link <%= typeof currentPage !== 'undefined' && currentPage === 'home' ? 'active' : '' %>">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    <a href="/le-mie-visite" class="nav-link <%= typeof currentPage !== 'undefined' && currentPage === 'visite' ? 'active' : '' %>">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>Le Mie Visite</span>
+                    </a>
+                    <div class="nav-user">
+                        <div class="user-info">
+                            <i class="fas fa-user-circle"></i>
+                            <span><%= paziente.nome %> <%= paziente.cognome %></span>
+                        </div>
+                        <form action="/logout" method="POST" class="logout-form">
+                            <button type="submit" class="btn-logout">
+                                <i class="fas fa-sign-out-alt"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="nav-toggle" id="navToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    <% } %>
+
+    <!-- Main Content -->
+    <main class="main-content <%= typeof paziente === 'undefined' || !paziente ? 'no-nav' : '' %>">
+        <%- body %>
+    </main>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="/js/main.js"></script>
+    
+    <!-- Page Specific Scripts -->
+    <% if (typeof pageScripts !== 'undefined') { %>
+        <% pageScripts.forEach(script => { %>
+            <script src="<%= script %>"></script>
+        <% }) %>
+    <% } %>
+</body>
+</html>

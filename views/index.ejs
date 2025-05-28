@@ -1,0 +1,135 @@
+<%- include('partials/header', {
+    title: 'Home', 
+    currentPage: 'home',
+    pageStyles: ['/css/doctors.css']
+}) %>
+
+<div class="container">
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1 class="page-title">
+            <i class="fas fa-user-md"></i>
+            I Nostri Specialisti
+        </h1>
+        <p class="page-subtitle">
+            Scegli il medico specialista più adatto alle tue esigenze e prenota la tua visita
+        </p>
+    </div>
+
+    <!-- Doctors Grid -->
+    <div class="doctors-grid">
+        <% Object.keys(medici).forEach((specialita, index) => { %>
+            <div class="specialty-section" style="animation-delay: '<%= index * 0.1 %>s'">
+                <div class="specialty-header">
+                    <div class="specialty-icon">
+                        <% if (specialita === 'Cardiologia') { %>
+                            <i class="fas fa-heartbeat"></i>
+                        <% } else if (specialita === 'Oculistica') { %>
+                            <i class="fas fa-eye"></i>
+                        <% } else if (specialita === 'Dermatologia') { %>
+                            <i class="fas fa-hand-paper"></i>
+                        <% } else if (specialita === 'Ortopedia') { %>
+                            <i class="fas fa-bone"></i>
+                        <% } else if (specialita === 'Neurologia') { %>
+                            <i class="fas fa-brain"></i>
+                        <% } else { %>
+                            <i class="fas fa-stethoscope"></i>
+                        <% } %>
+                    </div>
+                    <div>
+                        <h2 class="specialty-title"><%= specialita %></h2>
+                        <p class="specialty-price">€<%= medici[specialita][0].prezzo %> a visita</p>
+                    </div>
+                </div>
+
+                <div class="doctors-list">
+                    <% medici[specialita].forEach((medico, medicoIndex) => { %>
+                        <div class="doctor-card" style="animation-delay: '<%= (index * 0.1) + (medicoIndex * 0.05) %>s'">
+                            <div class="doctor-avatar">
+                                <i class="fas fa-user-md"></i>
+                            </div>
+                            
+                            <div class="doctor-info">
+                                <h3 class="doctor-name">
+                                    Dr. <%= medico.nome %> <%= medico.cognome %>
+                                </h3>
+                                
+                                <div class="doctor-details">
+                                    <div class="detail-item">
+                                        <i class="fas fa-birthday-cake"></i>
+                                        <span>Nato il <%= new Date(medico.data_nascita).toLocaleDateString('it-IT') %></span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <i class="fas fa-graduation-cap"></i>
+                                        <span>Laureato il <%= new Date(medico.data_laurea).toLocaleDateString('it-IT') %></span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <i class="fas fa-euro-sign"></i>
+                                        <span class="price">€<%= medico.prezzo %></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="doctor-actions">
+                                <a href="/prenota/<%= medico.id %>" class="btn btn-primary book-btn">
+                                    <i class="fas fa-calendar-plus"></i>
+                                    <span>Prenota Visita</span>
+                                    <div class="btn-ripple"></div>
+                                </a>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-user-md"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 class="stat-number"><%= Object.values(medici).flat().length %></h3>
+                    <p class="stat-label">Medici Specialisti</p>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-hospital"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 class="stat-number"><%= Object.keys(medici).length %></h3>
+                    <p class="stat-label">Specialità Mediche</p>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 class="stat-number">24/7</h3>
+                    <p class="stat-label">Prenotazioni Online</p>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 class="stat-number">100%</h3>
+                    <p class="stat-label">Soddisfazione</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/footer', {
+    pageScripts: ['/js/doctors.js']
+}) %>

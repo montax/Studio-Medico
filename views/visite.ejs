@@ -1,0 +1,89 @@
+<%- include('partials/header', {
+    title: 'Le Mie Visite',
+    currentPage: 'visite',
+    pageStyles: ['/css/visite.css']
+}) %>
+
+<div class="container mt-5">
+    <div class="page-header">
+        <h1 class="page-title">
+            <i class="fas fa-calendar-check"></i>
+            Le Mie Visite
+        </h1>
+        <p class="page-subtitle">
+            Visualizza e gestisci tutte le tue prenotazioni
+        </p>
+    </div>
+
+    <% if (visite.length === 0) { %>
+        <div class="no-visits">
+            <div class="no-visits-icon">
+                <i class="fas fa-calendar-times"></i>
+            </div>
+            <h3>Nessuna visita prenotata</h3>
+            <p>Non hai ancora prenotato nessuna visita.</p>
+            <a href="/" class="btn btn-primary">
+                <i class="fas fa-user-md"></i>
+                Prenota una Visita
+            </a>
+        </div>
+    <% } else { %>
+        <div class="visits-grid">
+            <% visite.forEach(visita => { %>
+                <div class="visit-card <%= visita.effettuata === 'si' ? 'completed' : '' %>">
+                    <div class="visit-header">
+                        <div class="visit-specialty">
+                            <i class="fas fa-stethoscope"></i>
+                            <%= visita.specialita %>
+                        </div>
+                        <div class="visit-status <%= visita.effettuata === 'si' ? 'status-completed' : 'status-pending' %>">
+                            <%= visita.effettuata === 'si' ? 'Completata' : 'In Attesa' %>
+                        </div>
+                    </div>
+
+                    <div class="visit-body">
+                        <div class="visit-doctor">
+                            <i class="fas fa-user-md"></i>
+                            <span>Dr. <%= visita.medico_nome %> <%= visita.medico_cognome %></span>
+                        </div>
+
+                        <div class="visit-datetime">
+                            <div class="visit-date">
+                                <i class="fas fa-calendar"></i>
+                                <span><%= new Date(visita.data).toLocaleDateString('it-IT', { 
+                                    weekday: 'long',
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric'
+                                }) %></span>
+                            </div>
+                            <div class="visit-time">
+                                <i class="fas fa-clock"></i>
+                                <span><%= visita.ora_inizio %></span>
+                            </div>
+                        </div>
+
+                        <div class="visit-price">
+                            <i class="fas fa-euro-sign"></i>
+                            <span>€<%= visita.prezzo %></span>
+                            <div class="payment-status <%= visita.saldo === 'si' ? 'paid' : 'unpaid' %>">
+                                <%= visita.saldo === 'si' ? 'Pagato' : 'Da Pagare' %>
+                            </div>
+                        </div>
+
+                        <% if (visita.note) { %>
+                            <div class="visit-notes">
+                                <i class="fas fa-clipboard"></i>
+                                <p><%= visita.note %></p>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    <% } %>
+</div>
+
+<%- include('partials/footer', {
+    pageScripts: ['/js/visite.js']
+}) %> 

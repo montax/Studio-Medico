@@ -1,0 +1,131 @@
+<%- include('partials/header', {
+    title: 'Login',
+    pageStyles: ['/css/login.css']
+}) %>
+
+<div class="login-container">
+    <div class="container">
+        <div class="row justify-content-center align-items-center min-vh-100">
+            <div class="col-md-6 col-lg-5">
+                <!-- Card di Login -->
+                <div class="login-card glass">
+                    <!-- Sezione Logo -->
+                    <div class="login-header">
+                        <div class="login-logo">
+                            <div class="logo-icon">
+                                <i class="fas fa-heartbeat"></i>
+                            </div>
+                            <h1 class="logo-text">Studio Azzena</h1>
+                        </div>
+                        <p class="login-subtitle">Accedi al tuo account per gestire le tue visite mediche</p>
+                    </div>
+
+                    <!-- Alert di Errore -->
+                    <% if (error) { %>
+                        <div class="alert alert-error">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <span><%= error %></span>
+                        </div>
+                    <% } %>
+
+                    <!-- Form di Login -->
+                    <form action="/login" method="POST" class="login-form" id="loginForm">
+                        <div class="form-group">
+                            <label for="username" class="form-label">
+                                <i class="fas fa-user"></i>
+                                Username
+                            </label>
+                            <div class="input-container">
+                                <input 
+                                    type="text" 
+                                    id="username" 
+                                    name="username" 
+                                    class="form-control"
+                                    placeholder="Inserisci il tuo username"
+                                    required
+                                    autocomplete="username"
+                                >
+                                <div class="input-focus"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password" class="form-label">
+                                <i class="fas fa-lock"></i>
+                                Password
+                            </label>
+                            <div class="input-container">
+                                <input 
+                                    type="password" 
+                                    id="password" 
+                                    name="password" 
+                                    class="form-control"
+                                    placeholder="Inserisci la tua password"
+                                    required
+                                    autocomplete="current-password"
+                                >
+                                <button type="button" class="toggle-password" id="togglePassword">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <div class="input-focus"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-options">
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="rememberMe">
+                                <span class="checkmark"></span>
+                                <span class="checkbox-text">Ricordami</span>
+                            </label>
+                            
+                            <a href="#" class="forgot-password">
+                                Password dimenticata?
+                            </a>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary login-btn" id="loginBtn">
+                            <span class="btn-text">
+                                <i class="fas fa-sign-in-alt"></i>
+                                Accedi
+                            </span>
+                            <div class="btn-loading">
+                                <div class="loading"></div>
+                                <span>Accesso in corso...</span>
+                            </div>
+                        </button>
+                    </form>
+
+                    <!-- Footer -->
+                    <div class="login-footer">
+                        <p class="footer-text">
+                            Non hai un account? 
+                            <a href="/register" class="register-link">Registrati qui</a>
+                        </p>
+                        
+                        <div class="login-features">
+                            <div class="feature">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>Sicuro</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-clock"></i>
+                                <span>24/7</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-mobile-alt"></i>
+                                <span>Mobile</span>
+                            </div>
+                        </div>
+                        <div class="credits">
+                            <p>Creato da Tommaso Montanari | NaDC !=</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/footer', {
+    pageScripts: ['/js/login.js']
+}) %>
